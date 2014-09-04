@@ -1,0 +1,60 @@
+footer {
+	clear: both;
+	padding: 4rem 0;
+	text-align: center;    
+	width: 100%;
+	background: #43474A;
+	color: #fff;
+}
+
+.copyright {
+	font-size: 1.2rem;
+	margin-top: 2rem;
+}
+
+.share-container {
+	text-align: center;
+	width: 100%;
+}
+
+.share-title {
+	font-size: 1.2rem;
+	margin-bottom: 1rem;
+}
+
+.share-item {
+	padding: 1rem;
+	width: 1.2rem;
+	height: 1.2rem;
+	border-radius: 50%;
+	color: #ffffff;
+	line-height: 0;
+	display: inline-block;
+	margin: 0 0.5rem;
+	cursor: pointer;
+	font-size: 1.2rem;
+}
+
+footer .google, footer .facebook, footer .twitter {
+	background: transparent;
+	color: #fff;
+	border: 1px solid #fff;
+}
+
+.google:hover {
+	background: #D64136;
+	color: #fff;
+	border: 1px solid #D64136;
+}
+
+.facebook:hover {
+	background: #1C60A7;
+	color: #fff;
+	border: 1px solid #1C60A7;
+}
+
+.twitter:hover {
+	background: #19BFE5;
+	color: #fff;
+	border: 1px solid #19BFE5;
+}

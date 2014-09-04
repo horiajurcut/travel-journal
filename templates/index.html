@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>Travel Journal</title>
+
+	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/png" />
+
+	<script src="//use.edgefonts.net/open-sans:n3,i3,n4,i4,n6,i6,n7,i7,n8,i8:all.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="/static/css/pure/0.3.0/pure-min.css" />
+	<link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/login.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/footer.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/animate.css" />
+	<link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto" />
+</head>
+
+<body class="login-page">
+	<div class="header-image" data-background-img="{{ TJ_BACKGROUND_IMG|tj_background_image }}"></div>
+	<div class="header-overlay"></div>
+	<div class="header-wrapper">  
+		<div class="logo-circle big"></div>
+		<div class="logo-circle small"></div>
+		<div class="logo">
+			<span class="text">TRAVEL</span>
+			<img src="/static/img/logo-login.png" alt="logo"/>
+			<span class="text">JOURNAL</span>
+		</div>
+		<img class="plan-text" src="/static/img/plan-login.png" />
+		<a class="button-signIn-link" href="{{ OAUTH_SIGN_IN_URL }}">
+			<div class="button-signIn"><i class="fa fa-google-plus"></i> <span>Sign in with Google+</span></div>
+		</a>
+	</div>
+	
+	<div class="login-container">
+		<p class="title">Meet Travel Journal</p>
+		<div class="box-wrapper">
+			<div class="box">
+				<img src="/static/img/landing/plan.png" />
+			</div>
+			<h1>If you fail to plan, you are planning to fail!</h1>
+			<p><b>Travel Journal</b> helps you plan your entire trip in under 30 seconds. All you need to do is fill out a simple form, and we take care of the rest. Using the computational power of <b>Google App Engine</b> we collect information, tailored to your preferences, from 11 reliable sources (Google Places, Google Translate, Youtube, Google Books, Flickr, Eventbrite, Expedia, Forecast.io, Wikipedia, Google Maps and Google Street View).</p>
+		</div>
+		<div class="box-wrapper">
+			<div class="box">
+				<img src="/static/img/landing/plans.png" />
+			</div>
+			<h1>Because it's all about the journey...</h1>
+			<p>Our main focus is not just delivering the most accurate information. We want each and every one of our users to be able to tell their story, in the most amazing way possible! Your future trips are transformed into beautiful, interactive journals that you can share with your friends on <b>Google+</b>, <b>Facebook</b> and <b>Twitter</b>.</p>
+		</div>
+		<div class="box-wrapper">
+			<div class="box">
+				<img src="/static/img/landing/journal.png" />
+			</div>
+			<h1>Unexplored paths lead to undiscovered treasures</h1>
+			<p>Depending on the information available, you will be able to browse through a variety of places, hotels (with relevant booking information), events, maps, reviews, weather forecast, videos and books. We even added a <b>Translate</b> button, so you don't feel lost when reading reviews in other languages.</p>
+		</div>
+		<div class="box-wrapper">
+			<div class="box">
+				<img src="/static/img/landing/journal_2.png" />
+			</div>
+			<h1>Time is an illusion</h1>
+			<p><b>Travel Journal</b> searches for available hotel rooms, events and weather forecasts around a given time frame. You can go as far as one year into the future. It doesn't matter if you're a planner or if you're spontaneous, now you have all the information you need without any effort. Remember, hope for the best and plan for the worst!</p>
+		</div>
+		<div class="box-wrapper">
+			<div class="box">
+				<img src="/static/img/landing/street_view.png" />
+			</div>
+			<h1>Navigate through the city</h1>
+			<p>Our custom-made <b>Street View</b> navigator lets you explore, step-by-step, the most popular places in a city of your choice. Using the power of <b>Google Maps Direction Service</b>, we create an optimal travel itinerary. If you're in a hurry, this is the best way to visit all the recommended places. Enough talk! Sign in with your <a href="{{ OAUTH_SIGN_IN_URL }}">Google+</a> account to get started.</p>
+		</div>
+	</div>
+	
+	{% include 'tj__footer.html' %}
+	
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="/static/js/waypoints/waypoints.min.js"></script>
+	<script type="text/javascript" src="/static/js/pages/login/init.js"></script>
+</body>
+
+</html>

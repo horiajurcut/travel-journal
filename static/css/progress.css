@@ -1,0 +1,34 @@
+/* Code belongs to Alecs Popa http://codepen.io/alecspopa/pen/bCjfK */
+
+progress[value]{
+	width:20rem;
+	height:3.5rem;
+	border: 1px;
+	border-radius:2px;
+	margin:1rem 0;
+	color:#FFF;
+	background: -moz-linear-gradient(left, #E8E9EB 0%, #E8E9EB 19%, transparent 19%, transparent 21%, #6A747C 21%, #6A747C 39%, transparent 39%, transparent 41%, #303336 41%, #303336 59%, transparent 39%, transparent 41%, #303336 41%, #303336 59%, transparent 59%, transparent 61%, #57A3D1 61%, #57A3D1 79%, transparent 79%, transparent 81%, #FEC14B 81%, #FEC14B 100%);
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#E8E9EB), color-stop(19%,#E8E9EB), color-stop(19%,transparent), color-stop(21%,transparent), color-stop(21%,#6A747C), color-stop(39%,#6A747C), color-stop(39%,transparent), color-stop(41%,transparent), color-stop(41%,#303336), color-stop(59%,#303336), color-stop(39%,transparent), color-stop(41%,transparent), color-stop(41%,#303336), color-stop(59%,#303336), color-stop(59%,transparent), color-stop(61%,transparent), color-stop(61%,#57A3D1), color-stop(79%,#57A3D1), color-stop(79%,transparent), color-stop(81%,transparent), color-stop(81%,#FEC14B), color-stop(100%,#FEC14B));
+	background: -webkit-linear-gradient(left, #E8E9EB 0%,#E8E9EB 19%,transparent 19%,transparent 21%,#6A747C 21%,#6A747C 39%,transparent 39%,transparent 41%,#303336 41%,#303336 59%,transparent 39%,transparent 41%,#303336 41%,#303336 59%,transparent 59%,transparent 61%,#57A3D1 61%,#57A3D1 79%,transparent 79%,transparent 81%,#FEC14B 81%,#FEC14B 100%);
+	background: -o-linear-gradient(left, #E8E9EB 0%,#E8E9EB 19%,transparent 19%,transparent 21%,#6A747C 21%,#6A747C 39%,transparent 39%,transparent 41%,#303336 41%,#303336 59%,transparent 39%,transparent 41%,#303336 41%,#303336 59%,transparent 59%,transparent 61%,#57A3D1 61%,#57A3D1 79%,transparent 79%,transparent 81%,#FEC14B 81%,#FEC14B 100%);
+	background: -ms-linear-gradient(left, #E8E9EB 0%,#E8E9EB 19%,transparent 19%,transparent 21%,#6A747C 21%,#6A747C 39%,transparent 39%,transparent 41%,#303336 41%,#303336 59%,transparent 39%,transparent 41%,#303336 41%,#303336 59%,transparent 59%,transparent 61%,#57A3D1 61%,#57A3D1 79%,transparent 79%,transparent 81%,#FEC14B 81%,#FEC14B 100%);
+	background: linear-gradient(to right, #E8E9EB 0%,#E8E9EB 19%,transparent 19%,transparent 21%,#6A747C 21%,#6A747C 39%,transparent 39%,transparent 41%,#303336 41%,#303336 59%,transparent 39%,transparent 41%,#303336 41%,#303336 59%,transparent 59%,transparent 61%,#57A3D1 61%,#57A3D1 79%,transparent 79%,transparent 81%,#FEC14B 81%,#FEC14B 100%);
+	-webkit-transform:rotate(180deg);
+	-ms-transform:rotate(180deg);
+	transform:rotate(180deg);
+	-webkit-appearance:none;
+	-moz-appearance:none;
+	appearance:none;
+}
+progress[value]::-webkit-progress-bar{background-color:transparent;position:relative;}
+progress[value]::-webkit-progress-value{
+	width:100%;
+	background-color:#FFF;
+	background-size:100%;
+	position:relative;
+	overflow:hidden;
+	-webkit-transition:width 0.6s ease;
+	-moz-transition:width 0.6s ease;
+	-o-transition:width 0.6s ease;
+	transition:width 0.6s ease;
+}

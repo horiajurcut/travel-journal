@@ -1,0 +1,21 @@
+<header>
+	<a href="/">
+		<div class="logo">
+			<img src="/static/img/logo.png" alt="Travel Journal Logo">
+			<span class="logo-name">TRAVEL <br/> JOURNAL</span>
+		</div>
+	</a>
+	<input type="checkbox" id="navbar-checkbox" class="navbar-checkbox">
+	<nav class="global__nav-menu">
+		<ul>
+			<li class="close-menu"><a class="global__nav-link" href="#">Close</a> <i class="fa fa-times"></i></li>
+			<li{% if BASE_URL.path not in ['/plan', '/faq', '/community'] %} class="selected"{% endif %}><a class="global__nav-link" href="/plans">Plans</a></li>
+			<li{% if BASE_URL.path == '/plan' %} class="selected"{% endif %}><a class="global__nav-link" href="/plan">New Destination</a></li>
+			<li{% if BASE_URL.path == '/community' %} class="selected"{% endif %}><a class="global__nav-link" href="/community">Community</a></li>
+			<li{% if BASE_URL.path == '/faq' %} class="selected"{% endif %}><a class="global__nav-link" href="/faq">FAQ</a></li>
+			<li><a class="global__nav-link" href="/logout"><i class="fa fa-power-off"></i></a></li>
+		</ul>
+		<label for="navbar-checkbox" class="navbar-handle"></label>
+	</nav>
+</header>
+<div class="header-fix"></div>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>Travel Journal - Hyperlapse</title>
+
+	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/png" />
+
+	<script src="//use.edgefonts.net/open-sans:n3,i3,n4,i4,n6,i6,n7,i7,n8,i8:all.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="/static/css/pure/0.3.0/pure-min.css" />
+	<link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/header.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/progress.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/journal.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/dashboard.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/hyperlapse.css" />
+</head>
+
+<body>
+
+{% include "tj__header.html" %}
+
+<div id="hyperlapse" data-plan-id="{{ plan_id }}">
+	<div class="hyperlapse__progress-wrap">
+		<h1>Please wait until we stich all images together. We just ran out of glue...</h1>
+		<progress value="100" max="100"></progress>
+	</div>
+	<div id="pano" class="invisible"></div>
+</div>
+
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false&v=3.exp&key={{ GOOGLE_API_KEY }}"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/static/js/libs/jquery.xhr.js"></script>
+<script type="text/javascript" src="/static/js/libs/dat.gui.min.js"></script>
+<script type="text/javascript" src="/static/js/libs/three.min.js"></script>
+<script type="text/javascript" src="/static/js/libs/GSVPano.js"></script>
+<script type="text/javascript" src="/static/js/libs/hyperlapse.js"></script>
+
+<script type="text/javascript" src="/static/js/pages/hyperlapse/init.js"></script>
+
+</body>
+
+</html>

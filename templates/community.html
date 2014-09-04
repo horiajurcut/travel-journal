@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>Travel Journal - Community</title>
+
+	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/png" />
+
+	<script src="//use.edgefonts.net/open-sans:n3,i3,n4,i4,n6,i6,n7,i7,n8,i8:all.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="/static/css/pure/0.3.0/pure-min.css" />
+	<link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/header.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/footer.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/plan.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/journal.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/dashboard.css" />
+</head>
+
+<body>
+
+{% include "tj__header.html" %}
+{% include "tj__header-photo.html" %}
+
+<div id="plans-wrapper" class="plans-wrapper clearfix">
+	{% if plans|length %}
+	<div class="search-wrapper">
+		<input class="search" placeholder="Search" />
+	</div>
+	
+	<ul class="list plans__items-list-js">
+		{% for plan in plans %}
+		<li class="plan__card-wrapper plan__card-item-js-{{ plan.plan_id }}" data-status="{{ plan.status }}" data-plan-id="{{ plan.plan_id }}">
+			<div class="plan__card">
+				<div class="plan__card-header" style="background-image: url({{ plan.cover_url|tj_default_plan_card_photo(plan.location) }});">
+					<img src="{{ plan.cover_url }}" />
+				</div>
+				<div class="plan__card-title">
+					<span class="js-city">{{ plan.city }}</span>
+				</div>
+	
+				<div class="plan__card-content">
+					<a class="plan__card-row" href="/journal/{{ plan.plan_id }}">
+						<i class="fa fa-file-text plan__card-icon"></i>
+						<span class="plan__card-description">View Journal</span>
+					</a>
+					<a class="plan__card-row" href="/street-view/{{ plan.plan_id }}">
+						<i class="fa fa-bullseye plan__card-icon"></i>
+						<span class="plan__card-description">Street View</span>
+					</a>
+	
+					<a class="plan__card-row" href="/hyperlapse/{{ plan.plan_id }}">
+						<i class="fa fa-camera plan__card-icon"></i>
+						<span class="plan__card-description">Hyperlapse</span>
+					</a>
+				</div>
+	
+				<div class="plan__share-container">
+					<a href="https://plus.google.com/share?url={{ BASE_URL.scheme + '://' + BASE_URL.netloc + '/journal/' + plan.plan_id|string }}"
+					   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+						<div class="plan__share-item google"><i class="fa fa-google-plus"></i></div>	
+					</a>
+					<a href="https://www.facebook.com/sharer/sharer.php?u={{ BASE_URL.scheme + '://' + BASE_URL.netloc + '/journal/' + plan.plan_id|string }}"
+					   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+						<div class="plan__share-item facebook"><i class="fa fa-facebook"></i></div>
+					</a>
+					<a href="https://twitter.com/share?url={{ BASE_URL.scheme + '://' + BASE_URL.netloc + '/journal/' + plan.plan_id|string }}&text=Check out this awesome travel journal&via=TravelJApp"
+					   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+						<div class="plan__share-item twitter"><i class="fa fa-twitter"></i></div>
+					</a>
+				</div>
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+	<div class="plans__no-results">No results found <i class="fa fa-frown-o"></i></div>
+	{% endif %}
+
+	{% if not plans|length %}
+	<div class="plans__no-plans">
+		<p>The members of the community haven't made any plans yet <i class="fa fa-frown-o"></i></p>
+		<p>Be the first! Go ahead and choose a destination <a href="/plan">here</a>.</p>
+	</div>
+	{% endif %}
+</div>
+
+{% include "tj__footer.html" %}
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/static/js/libs/list.min.js"></script>
+
+<script>
+	$('document').ready(function(){
+		if ($('.search').size()) {
+			var options = {
+				valueNames: [ 'js-city' ]
+			};
+			var featureList = new List('plans-wrapper', options);
+			
+			$('.search').on('keyup', function(){
+				if (featureList.matchingItems.length < 1) {
+					$('.plans__no-results').show();
+				} else {
+					$('.plans__no-results').hide();
+				}
+			});
+		}
+	});
+</script>
+
+</body>
+
+</html>

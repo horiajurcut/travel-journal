@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>Travel Journal - Street View</title>
+
+	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/png" />
+
+	<meta name="description" content="Travel Journal - Plan your entire holiday trip in under 30 seconds" />
+
+	<!-- Google Authorship and Publisher Markup -->
+	<link rel="author" href="{{ TJ__PROFILE_URL or 'https://plus.google.com/+Gcdc2013traveljournalAppspotTJ/posts' }}"/>
+	<link rel="publisher" href="https://plus.google.com/+Gcdc2013traveljournalAppspotTJ"/>
+
+	<!-- Schema.org markup for Google+ -->
+	<meta itemprop="name" content="Travel Journal - Street View">
+	<meta itemprop="description" content="Travel Journal - Street View Navigator">
+	<meta itemprop="image" content="{{ ''|tj_default_cover_photo(0) }}">
+
+	<!-- Twitter Card data -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@TravelJApp">
+	<meta name="twitter:title" content="Travel Journal - Street View">
+	<meta name="twitter:description" content="Travel Journal - Street View Navigator">
+	<!-- Twitter summary card with large image must be at least 280x150px -->
+	<meta name="twitter:image:src" content="{{ ''|tj_default_cover_photo(0) }}">
+
+	<!-- Open Graph data -->
+	<meta property="og:title" content="Travel Journal - Street View" />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content="{{ BASE_URL.scheme + '://' + BASE_URL.netloc + BASE_URL.path }}" />
+	<meta property="og:image" content="{{ ''|tj_default_cover_photo(0) }}" />
+	<meta property="og:description" content="Travel Journal - Street View Navigator" />
+	<meta property="og:site_name" content="Travel Journal" />
+	<meta property="fb:admins" content="677714081" />
+
+	<script src="//use.edgefonts.net/open-sans:n3,i3,n4,i4,n6,i6,n7,i7,n8,i8:all.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="/static/css/pure/0.3.0/pure-min.css" />
+	<link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/header.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/journal.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/dashboard.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/street-view.css" />
+</head>
+
+<body>
+
+{% include "tj__header.html" %}
+
+<div class="street-view__wrapper">
+	<div id="map" class="street-view__map"></div>
+	<div id="directions" class="street-view__directions" data-plan-id="{{ plan_id }}"></div>
+</div>
+
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false&v=3.exp&key={{ GOOGLE_API_KEY }}"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/static/js/libs/jquery.xhr.js"></script>
+<script type="text/javascript" src="/static/js/libs/isMobile.min.js"></script>
+
+<script type="text/javascript" src="/static/js/pages/street-view/init.js?v=2"></script>
+
+</body>
+
+</html>

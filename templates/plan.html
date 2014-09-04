@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>Travel Journal</title>
+
+	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/png" />
+
+	<script src="//use.edgefonts.net/open-sans:n3,i3,n4,i4,n6,i6,n7,i7,n8,i8:all.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="/static/css/pure/0.3.0/pure-min.css" />
+	<link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/header.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/journal.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/dashboard.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/plan.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/footer.css" />
+
+	<link type="text/css" rel="stylesheet" href="/static/js/pickadate/themes/default.css" id="theme_base">
+	<link type="text/css" rel="stylesheet" href="/static/js/pickadate/themes/default.date.css" id="theme_date">
+</head>
+
+<body>
+
+{% include "tj__header.html" %}
+{% include "tj__header-photo.html" %}
+
+<div class="plan__content">
+	<form id="plan__trip" class="plan__new-form" method="post" action="/plan">
+		{% if ERROR_MSG %}
+		<h1 class="plan__question error">{{ ERROR_MSG }}</h1>
+		{% endif %}
+
+		<h1 class="plan__question q-location-js">1. What's your destination?</h1>
+		<input class="typeahead" id="city" name="city" type="text" placeholder="City" />
+		
+		<input id="latitude" type="hidden" name="latitude" value="">
+		<input id="longitude" type="hidden" name="longitude" value="">
+		<input id="country" type="hidden" name="country" value="">
+		<input id="short_city" type="hidden" name="short_city" value="">
+
+		<h1 class="plan__question q-day-js">2. When do you intend to travel?</h1>
+		<input id="future_day" name="future_day" type="text" class="datepicker" placeholder="Pick a Date" />
+
+		<h1 class="plan__question q-places-js">3. What do you want to visit?</h1>
+		<ul id="places__container-checkboxes-js" class="plan__big-cb-container clearfix">
+			<li class="plan__big-cb-item">
+				<input id="art_gallery" class="big-cb" type="checkbox" name="places[]" value="art_gallery">
+				<div class="plan__big-cb-wrap">
+					<label for="art_gallery">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-picture-o"></i>
+						</div>  
+						<span class="big-cb-desc">
+							Art Galleries
+						</span>
+					</label>
+					
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="aquarium" class="big-cb" type="checkbox" name="places[]" value="aquarium">
+				<div class="plan__big-cb-wrap">
+					<label for="aquarium">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-heart"></i>                            
+						</div>
+						<span class="big-cb-desc">
+							Aquariums
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="museum" class="big-cb" type="checkbox" name="places[]" value="museum">
+				<div class="plan__big-cb-wrap">
+					<label for="museum">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-home"></i>
+						</div>
+						<span class="big-cb-desc">
+							Museums
+						</span>
+					</label>                    
+				</div>                
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="park" class="big-cb" type="checkbox" name="places[]" value="park">
+				<div class="plan__big-cb-wrap">
+					<label for="park">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-leaf"></i>
+						</div>
+						<span class="big-cb-desc">
+							Parks
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="stadium" class="big-cb" type="checkbox" name="places[]" value="stadium">
+				<div class="plan__big-cb-wrap">
+					<label for="stadium">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-trophy"></i>
+						</div>
+						<span class="big-cb-desc">
+							Stadiums
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="movie_theater" class="big-cb" type="checkbox" name="places[]" value="movie_theater">
+				<div class="plan__big-cb-wrap">
+					<label for="movie_theater">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-film"></i>
+						</div>
+						<span class="big-cb-desc">
+							Cinemas
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="book_store" class="big-cb" type="checkbox" name="places[]" value="book_store">
+				<div class="plan__big-cb-wrap">
+					<label for="book_store">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-book"></i>
+						</div>
+						<span class="big-cb-desc">
+							Book Store
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="cafe" class="big-cb" type="checkbox" name="places[]" value="cafe">
+				<div class="plan__big-cb-wrap">
+					<label for="cafe">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-coffee"></i>
+						</div>
+						<span class="big-cb-desc">
+							Cafes
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="bar" class="big-cb" type="checkbox" name="places[]" value="bar">
+				<div class="plan__big-cb-wrap">
+					<label for="bar">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-glass"></i>
+						</div>
+						<span class="big-cb-desc">
+							Bars
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="restaurant" class="big-cb" type="checkbox" name="places[]" value="restaurant">
+				<div class="plan__big-cb-wrap">
+					<label for="restaurant">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-cutlery"></i>
+						</div>
+						<span class="big-cb-desc">
+							Restaurants
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="spa" class="big-cb" type="checkbox" name="places[]" value="spa">
+				<div class="plan__big-cb-wrap">
+					<label for="spa">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-sun-o"></i>
+						</div>
+						<span class="big-cb-desc">
+							Spas
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="shopping_mall" class="big-cb" type="checkbox" name="places[]" value="shopping_mall">
+				<div class="plan__big-cb-wrap">
+					<label for="shopping_mall">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-gift"></i>
+						</div>
+						<span class="big-cb-desc">
+							Shopping Malls
+						</span>
+					</label>
+				</div>
+			</li>
+		</ul>
+		
+		<h1 class="plan__question q-events-js">4. Which are your favorite events?</h1>
+		<ul id="events__container-checkboxes-js" class="plan__big-cb-container clearfix">
+			<li class="plan__big-cb-item">
+				<input id="entertainment" class="big-cb" type="checkbox" name="events[]" value="entertainment">
+				<div class="plan__big-cb-wrap">
+					<label for="entertainment">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-ticket"></i>
+						</div>
+						<span class="big-cb-desc">
+							Entertainment
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="music" class="big-cb" type="checkbox" name="events[]" value="music">
+				<div class="plan__big-cb-wrap">
+					<label for="music">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-music"></i>
+						</div>
+						<span class="big-cb-desc">
+							Music
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="performances" class="big-cb" type="checkbox" name="events[]" value="performances">
+				<div class="plan__big-cb-wrap">
+					<label for="performances">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-microphone"></i>
+						</div>
+						<span class="big-cb-desc">
+							Performances
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="social" class="big-cb" type="checkbox" name="events[]" value="social">
+				<div class="plan__big-cb-wrap">
+					<label for="social">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-group"></i>
+						</div>
+						<span class="big-cb-desc">
+							Social
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="food" class="big-cb" type="checkbox" name="events[]" value="food">
+				<div class="plan__big-cb-wrap">
+					<label for="food">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-cutlery"></i>
+						</div>
+						<span class="big-cb-desc">
+							Food
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="sports" class="big-cb" type="checkbox" name="events[]" value="sports">
+				<div class="plan__big-cb-wrap">
+					<label for="sports">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-dribbble"></i>
+						</div>
+						<span class="big-cb-desc">
+							Sports
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="fairs" class="big-cb" type="checkbox" name="events[]" value="fairs">
+				<div class="plan__big-cb-wrap">
+					<label for="fairs">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-magic"></i>
+						</div>
+						<span class="big-cb-desc">
+							Fairs
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="conferences" class="big-cb" type="checkbox" name="events[]" value="conferences">
+				<div class="plan__big-cb-wrap">
+					<label for="conferences">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-briefcase"></i>
+						</div>
+						<span class="big-cb-desc">
+							Conferences
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="conventions" class="big-cb" type="checkbox" name="events[]" value="conventions">
+				<div class="plan__big-cb-wrap">
+					<label for="conventions">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-bullhorn"></i>
+						</div>
+						<span class="big-cb-desc">
+							Conventions
+						</span>
+					</label>
+				</div>
+			</li>
+
+			<li class="plan__big-cb-item">
+				<input id="recreation" class="big-cb" type="checkbox" name="events[]" value="recreation">
+				<div class="plan__big-cb-wrap">
+					<label for="recreation">
+						<div class="big-cb-label">
+							<i class="fa fa-check hidden"></i>
+							<i class="fa fa-smile-o"></i>
+						</div>
+						<span class="big-cb-desc">
+							Recreation
+						</span>
+					</label>
+				</div>
+			</li>
+		</ul>
+
+		<button id="process-plan" type="submit" class="pure-button pure-button-primary">Plan it</button>
+	</form>
+</div>
+
+{% include "tj__footer.html" %}
+
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false&v=3.exp&key=AIzaSyChvpRHAO3OGJOAEq3fgcLJroxuQUJueWg"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/static/js/typeahead/typeahead.min.js"></script>
+
+<script type="text/javascript" src="/static/js/pickadate/picker.js"></script>
+<script type="text/javascript" src="/static/js/pickadate/picker.date.js"></script>
+<script type="text/javascript" src="/static/js/pickadate/picker.time.js"></script>
+<script type="text/javascript" src="/static/js/pickadate/legacy.js"></script>
+
+<script type="text/javascript" src="/static/js/pages/plan/init.js"></script>
+
+</body>
+
+</html>

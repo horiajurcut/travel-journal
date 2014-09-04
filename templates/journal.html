@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Article">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<!-- Place this data between the <head> tags of your website -->
+	<title>Travel Journal - {{ city_info.city }}</title>
+	<meta name="description" content="Travel Journal - Plan your entire holiday trip in under 30 seconds" />
+
+	<!-- Google Authorship and Publisher Markup -->
+	<link rel="author" href="{{ TJ__PROFILE_URL or 'https://plus.google.com/+Gcdc2013traveljournalAppspotTJ/posts' }}"/>
+	<link rel="publisher" href="https://plus.google.com/+Gcdc2013traveljournalAppspotTJ"/>
+
+	<!-- Schema.org markup for Google+ -->
+	<meta itemprop="name" content="Travel Journal - {{ city_info.city }}">
+	<meta itemprop="description" content="Travel Journal - A guided tour of {{ city_info.city }}">
+	<meta itemprop="image" content="{{ cover_photos[0].url|tj_default_cover_photo(0) }}">
+
+	<!-- Twitter Card data -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@TravelJApp">
+	<meta name="twitter:title" content="Travel Journal - {{ city_info.city }}">
+	<meta name="twitter:description" content="Travel Journal - A guided tour of {{ city_info.city }}">
+	<!-- Twitter summary card with large image must be at least 280x150px -->
+	<meta name="twitter:image:src" content="{{ cover_photos[0].url|tj_default_cover_photo(0) }}">
+
+	<!-- Open Graph data -->
+	<meta property="og:title" content="Travel Journal - {{ city_info.city }}" />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content="{{ BASE_URL.scheme + '://' + BASE_URL.netloc + BASE_URL.path }}" />
+	<meta property="og:image" content="{{ cover_photos[0].url|tj_default_cover_photo(0) }}" />
+	<meta property="og:description" content="Travel Journal - A guided tour of {{ city_info.city }}" />
+	<meta property="og:site_name" content="Travel Journal" />
+	<meta property="fb:admins" content="677714081" />
+
+	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/png" />
+
+	<script src="//use.edgefonts.net/open-sans:n3,i3,n4,i4,n6,i6,n7,i7,n8,i8:all.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="/static/css/pure/0.3.0/pure-min.css" />
+	<link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/header.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/footer.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/niftymodal.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/weather-icons.css" />
+	<link type="text/css" rel="stylesheet" href="/static/css/journal.css" />
+</head>
+
+<body>
+	{% include "tj__header.html" %}
+
+	{% if places|length %}
+	<!-- Some awesome places -->
+	<div class="cover with-menu position" data-background-image="{{ cover_photos[0].url|tj_default_cover_photo(0) }}" style="background-color: #CCC">
+		{% if city_info.summary %}
+		<div class="info bottom-left">
+			<h1>{{ city_info.city }}</h1>
+			<p>{{ city_info.summary|safe }}</p>
+		</div>
+		{% else %}
+		<div class="info bottom-left">
+			<h1>{{ city_info.city }}</h1>
+			<p>You're in luck. We found some amazing places you can visit while staying in {{ city_info.city }}. Are you ready for your next big adventure?</p>
+		</div>
+		{% endif %}
+	</div>
+	
+	<div id="places" class="content">
+		<h1 class="places-headline">Recommended Places</h1>
+			
+		<p class="places-description">
+			We put together a list of the very best tourist attractions in <b>{{ city_info.city }}</b>, based on your preferences. Photos, reviews, events, ratings and other relevant information, will help you decide if this is indeed your next travel destination. Remember to use the <b>Translate</b> button if you ever feel lost while reading reviews in other languages. 
+		</p>
+		<div class="pure-g-r">
+			{%- for column in places|slice(2) %}
+			<div class="pure-u-1-2">
+				{%- for place in column %}
+				<div class="article places__container">
+					<h1 class="place-header"><i class="{{ place.place_types|tj_place_icon }}"></i>{{ place.place_name|safe }}&nbsp;{{ place.place_rating|tj_rating_system|safe }}</h1>
+
+					{% if place.photos|length %}
+					<div class="place-photos">
+						{% if place.photos|length > 2 %}
+						<div class="pure-g">
+							{% for photo in place.photos %}
+							{% if loop.index != place.photos|length %}
+							<div class="place-photo-unit pure-u-1-{{ place.photos|length - 1 }} place-photo-wrapper" data-place-img="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{ photo.reference }}&sensor=true&key={{ GOOGLE_API_KEY }}" style="background-color: #CCC;"></div>
+							{% endif %}
+							{% endfor %}
+						</div>
+						{% endif %}
+
+						<div class="place-photo-wrapper" data-place-img="https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference={{ place.photos[place.photos|length - 1].reference }}&sensor=true&key={{ GOOGLE_API_KEY }}" style="background-color: #CCC;"></div>
+					</div>
+					{% endif %}
+					
+					{% if place.place_vicinity %}
+					<p class="place-address">
+						<b>Vicinity:</b> {{ place.place_vicinity|safe }}&nbsp;&nbsp;
+						<a class="google__maps-link" target="_blank" href="{{ place.location|tj_map_link(place.place_name|safe) }}">
+							<i class="fa fa-arrow-circle-down"></i>Get Directions
+						</a>
+					</p>
+					{% endif %}
+
+					<div class="place-photos place-map">
+						<a target="_blank" class="place-photo-wrapper map" href="{{ place.location|tj_map_link(place.place_name|safe) }}" style="background-image: url('http://maps.google.com/maps/api/staticmap?size=512x224&zoom=16&scale=2&maptype=roadmap&markers=color:red|{{ place.location }}&visual_refresh=true&language=en&sensor=false&key={{ GOOGLE_API_KEY }}');"></a>
+					</div>
+
+					{% if place.events|length %}
+					<h1 class="place-header sub-header"><i class="fa fa-calendar-o"></i>Recent Events ({{ place.events|length }})</h1>
+
+					<div class="events">
+						{% for event in place.events %}
+						<div class="event-item">
+							<div class="event-date"><i class="fa fa-clock-o"></i>{{ event.start_time.strftime('%e %B %Y, %I:%M %p') }}</div>
+							<div class="event-summary">
+								<span>{{ event.summary }}</span>
+							</div>
+							<div class="event-page">
+								<b>Event page:</b>
+								&nbsp;
+								<a target="_blank" href="{{ event.url }}" class="event-url">{{ event.url }}</a>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %}
+
+					{% if place.reviews|length %}
+					<h1 class="place-header sub-header"><i class="fa fa-comment-o"></i>Recent Reviews ({{ place.reviews|length }})</h1>
+					
+					<div class="reviews clearfix">
+						{% for review in place.reviews %}
+						<div class="review-item">
+							<img class="review-avatar"
+								data-author-id="{{ review.author_id }}"
+								data-has-photo="{{ review.has_photo }}"
+								src="/static/img/default_user.jpg" />
+							
+							<div class="review-content">
+								<p class="review-author">
+									<a target="_blank" href="https://plus.google.com/{{ review.author_id }}">{{ review.author_name }}</a>
+								</p>
+								<p class="review-text">
+									<span>{{ review.review|safe }}</span> - <a class="review-translate" href="#">Translate</a>
+								</p>
+								<p class="review-rating">{{ review.rating|tj_rating_system|safe }}</p>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %}
+
+				</div>
+				{%- endfor %}
+			</div>
+			{%- endfor %}
+		</div>
+	</div>
+	{% endif %}
+	
+	{% if forecast.forecast_hourly_data|length %}
+	<!-- Some accurate weather info -->
+	<div class="cover position" data-background-image="{{ cover_photos[1].url|tj_default_cover_photo(1) }}" style="background-color: #CCC">
+		<div class="info bottom-left">
+			<h1>{{ city_info.city }}</h1>
+			<p>You know how it always rains when you don't have an umbrella with you? Our forecast helps you be prepared for any type of weather.</p>
+		</div>
+	</div>
+
+	<div id="weather" class="content">
+			<h1>Weather Forecast</h1>
+			
+			<p class="weather-content">
+				Nature is unpredictible, but we think it's best if you take precautions. Here's how we believe the weather will be like in <b>{{ city_info.city }}</b>, starting with {{ city_info.future_day.strftime('%e %B %Y') }} (courtesy of <a class="section-description-link" target="_blank" href="http://forecast.io/">Forecast.io</a>). We might be wrong, so don't trust everything you read on the Internet.
+			</p>
+			
+			<div class="pure-g-r weather__forecast-wrapper">
+				<div class="pure-u-2-5 weather-panel">
+					<div class="article">
+						<div class="weather__chart-wrap">
+							<h2><i class="wi-strong-wind"></i> Max Wind Speed</h2>
+							<div id="chart__wind-speed" style="width: 100%; height: 300px;"></div>
+						</div>
+						<div class="weather__chart-wrap">
+							<h2><i class="wi-thermometer-exterior"></i> Feels like</h2>
+							<div id="chart__feels-like" style="width: 100%; height: 300px;"></div>
+						</div>
+					</div>                    
+				</div>
+				<div class="pure-u-3-5 weather-panel weather-info">
+					<div class="article">
+						<table class="pure-table pure-table-striped weather__info-table-js">
+							<thead>
+								<tr>
+									<th><i class="fa fa-clock-o"></i> HOUR</th>
+									<th class="weather__icon"><i class="wi-day-sunny-overcast"></i></th>
+									<th><i class="wi-thermometer-exterior"></i> FEELS LIKE</th>
+									<th class="weather__wind"><i class="wi-strong-wind"></i> WIND</th>
+									<th class="weather__clouds"><i class="wi-cloud"></i> CLOUDS</th>
+									<th class="weather__humidity">HUMIDITY</th>
+									<th class="weather__visibility">VISIBILITY</th>
+								</tr>
+							
+							</thead>
+							<tbody>
+								{% for hour in forecast.forecast_hourly_data %}
+								<tr>
+									<td>
+										{{ hour.time|tj_format_timestamp(forecast.forecast_offset) }} -
+										{{ hour.time|tj_format_timestamp(forecast.forecast_offset + 1) }}
+									</td>
+									<td class="weather__icon"><i class="{{ hour.icon|tj_weather_icon }}"></i> </td>
+									<td>
+										<span class="weather__grades-max"
+										      data-temp-grades="{{ '%.2f'|format(hour.apparentTemperature|default(0)) }}"
+										      data-hour="{{ hour.time|tj_format_timestamp(forecast.forecast_offset) }}">
+											{{ "%.2f"|format(hour.apparentTemperature|default(0)) }} &deg;F
+										</span>
+									</td>
+									<td class="weather__wind">{{ "%.2f"|format(hour.windSpeed|default(0)) }} mi/h</td>
+									<td class="weather__clouds">{{ "%.2f"|format(hour.cloudCover|default(0) * 100) }}%</td>
+									<td class="weather__humidity">{{ "%.2f"|format(hour.humidity|default(0) * 100) }}%</td>
+									<td class="weather__visibility">{{ "%.2f"|format(hour.visibility|default(0)) }} mi</td>
+								</tr>
+								{% endfor %}
+							</tbody>		
+						</table>
+						<div class="weather__computed-stats" data-wind-speed="{{ '%.2f'|format(forecast.forecast_hourly_data|tj_max_wind_speed) }}"></div>
+					</div>
+				</div>
+			</div>
+	</div>
+	{% endif %}
+	
+	{% if hotels|length %}
+	<!-- Some reliable hotels -->
+	<div class="cover position" data-background-image="{{ cover_photos[2].url|tj_default_cover_photo(2) }}" style="background-color: #CCC">
+		<div class="info bottom-left">
+			<h1>{{ city_info.city }}</h1>
+			<p>We know that there's no place like home. This doesn't mean we don't want you to feel comfortable on your trip. Here you have some of the best hotels {{ city_info.city }} has to offer.</p>
+		</div>
+	</div>
+
+	<div id="hotels" class="content">
+		<div class="article">
+			<h1 class="hotels__headline">Hotels in {{ city_info.city }}</h1>
+			
+			<p class="hotels__description">We want to make sure you find the perfect accommodations for your trip. We welcome you to our selection of hotels (courtesy of <a class="section-description-link" target="_blank" href="http://www.expedia.com/">Expedia</a>), available for booking starting with {{ city_info.future_day.strftime('%e %B %Y') }}. All you have to do now, is discover the unique experiences the hotels offer and book your stay at the preferred one.
+			</p>
+		</div>
+
+		<div class="pure-g-r">
+			{%- for column in hotels|slice(2) %}
+			<div class="pure-u-1-2">
+				{%- for hotel in column %}
+				<div class="article">
+					{% if hotel.photos|length %}
+					<div class="hotel-photos">
+						{% if hotel.photos|length > 2 %}
+						<div class="pure-g">
+							{% for photo in hotel.photos %}
+							{% if loop.index != hotel.photos|length %}
+							<div class="hotel-photo-unit pure-u-1-{{ hotel.photos|length - 1 }} hotel-photo-wrapper" data-hotel-img="{{ photo.url|tj_hotels_medium_photos }}" style="background-color: #CCC;">
+							</div>
+							{% endif %}
+							{% endfor %}
+						</div>
+						{% endif %}
+
+						{% set large_photo = hotel.photos[hotel.photos|length - 1] %}
+						<div class="hotel-photo-wrapper" data-hotel-img="{{ large_photo.url|tj_hotels_big_photos(large_photo.is_large) }}" style="background-color: #CCC;">
+						</div>
+					</div>
+					{% endif %}
+
+					<h1 class="hotel-headline"><i class="fa fa-building"></i>{{ hotel.hotel_name|safe }}&nbsp;{{ hotel.hotel_rating|tj_rating_system|safe }}</h1>
+					
+					<p class="hotel-description">
+						<b>From the owner:</b> {{ hotel.hotel_description|tj_striphtml|tj_hotel_description }}...
+					</p>
+
+					<p class="hotel-amenities">
+						<b>Amenities:</b>
+						{{ (hotel.hotel_amenity_mask or 0)|tj_hotels_amenities_mask }}
+					</p>
+
+					{% if hotel.hotel_low_rate or hotel.hotel_high_rate %}
+					<p class="hotel-rates">
+						{% if hotel.hotel_low_rate %}
+						<b>Low Rate:</b> {{ "%.2f"|format(hotel.hotel_low_rate|default(0)|float) }}$
+						&nbsp;&nbsp;
+						{% endif %}
+						
+						{% if hotel.hotel_high_rate %}
+						<b>High Rate:</b> {{ "%.2f"|format(hotel.hotel_high_rate|default(0)|float) }}$
+						{% endif %}
+
+						{% if hotel.hotel_url %}
+						&nbsp;&nbsp;
+						<a target="_blank" href="{{ hotel.hotel_url|safe }}">
+							<i class="fa fa-bookmark"></i>Book a Room
+						</a>
+						{% endif %}
+					</p>
+					{% endif %}
+
+					<p class="hotel-address">
+						<b>Address:</b> {{ hotel.hotel_address|safe }} - {{ hotel.hotel_location_description|safe }}
+						&nbsp;&nbsp;
+						<a class="google__maps-link" target="_blank" href="{{ hotel.location|tj_map_link(hotel.hotel_name) }}">
+							<i class="fa fa-arrow-circle-down"></i>Get Directions
+						</a>
+					</p>
+
+					<a target="_blank" class="hotel-map" href="{{ hotel.location|tj_map_link(hotel.hotel_name) }}" style="background-image: url('http://maps.google.com/maps/api/staticmap?size=512x224&zoom=16&scale=2&maptype=hybrid&markers=color:green|{{ hotel.location }}&visual_refresh=true&language=en&sensor=false&key={{ GOOGLE_API_KEY }}');"></a>
+
+					<p class="hotel-rating">
+						<span>Trip Advisor Rating: {{ hotel.hotel_trip_advisor_rating|tj_rating_system|safe }}</span>
+					</p>
+				</div>
+				{%- endfor %}
+			</div>
+			{%- endfor  %}
+		</div>
+	</div>
+	{% endif %}
+
+	<!-- Some famous events -->
+	{% if events|length %}
+	<div class="cover position" data-background-image="{{ cover_photos[3].url|tj_default_cover_photo(3) }}" style="background-color: #CCC">
+		<div class="info bottom-left">
+			<h1>{{ city_info.city }}</h1>
+			<p>We're keeping you busy! We prepared a list of events, tailored to your preferences. Connect with other people that share your interests.</p>
+		</div>
+	</div>
+
+	<div id="events" class="content">
+		<div class="article">
+			<h1 class="event__headline">Events in {{ city_info.city }}</h1>
+			
+			<p class="event__description">Don't be a stranger while you're travelling. You can connect with other people that share your interests. Here's what's happening in <b>{{ city_info.city }}</b>, starting with {{ city_info.future_day.strftime('%e %B %Y') }}. You can attend any event by registering on <b>Eventbrite</b>. The links, along with directions and information about the organizers, can be found below.</p>
+		</div>
+
+		<div class="pure-g-r">
+			{%- for column in events|slice(2) %}
+			{% if column|length %}
+			<div class="pure-u-1-2">
+				{%- for event in column %}
+				<div class="article event__wrapper">
+					<h1 class="event__item-headline"><i class="fa fa-calendar-o"></i>{{ event.title|safe }}</h1>
+
+					<p class="event__item-schedule">
+						<b>Schedule:</b>
+						{% if event.repeats == 1 %}
+						From {{ event.start_date.strftime('%e %B %Y, %I:%M %p') }} until {{ event.end_date.strftime('%e %B %Y, %I:%M %p') }}
+						{% else %}
+						Between {{ city_info.future_day.strftime('%e %B %Y') }} and {{ city_info.future_end.strftime('%e %B %Y') }} (recurring event)
+						{% endif %}
+					</p>
+
+					<p class="event__item-category">
+						<b>Event Category:</b>
+						{{ event.categories|tj_capitalize or 'N/A' }}
+					</p>
+
+					<p class="event__item-address">
+						<b>Event address:</b>
+						{{ event.venue_address or 'N/A' }}
+						{% if event.venue_address_2 %}, {{ event.venue_address_2 }}{% endif %}
+						&nbsp;&nbsp;
+						<a class="google__maps-link" target="_blank" href="{{ event.location|tj_map_link(event.venue_address) }}">
+							<i class="fa fa-arrow-circle-down"></i>Get Directions
+						</a>
+					</p>
+
+					<a target="_blank" class="event__item-map" href="{{ event.location|tj_map_link(event.venue_address) }}" style="background-image: url('http://maps.google.com/maps/api/staticmap?size=512x224&zoom=16&scale=2&maptype=roadmap&markers=color:green|{{ event.location }}&visual_refresh=true&language=en&sensor=false&key={{ GOOGLE_API_KEY }}');"></a>
+
+					<p class="event__item-organizer">
+						<b>Organizer:</b> <a target="_blank" href="{{ event.organizer_url }}">{{ event.organizer_url }}</a>
+					</p>
+
+					<p class="event__item-buy-tickets">
+						<a target="_blank" href="{{ event.url }}"><i class="fa fa-ticket"></i>Buy Tickets from Eventbrite</a>
+					</p>
+				</div>
+				{%- endfor %}
+			</div>
+			{% endif %}
+			{%- endfor  %}
+		</div>
+	</div>
+	{% endif %}
+
+	{% if places|length %}
+	<!-- Some directions maybe? -->
+	<div class="cover" data-background-image="{{ cover_photos[4].url|tj_default_cover_photo(4) }}" style="background-color: #CCC"></div>
+
+	<div id="directions" class="content" data-plan-id="{{ city_info.plan_id }}">
+		<div class="article">
+			<h1 class="directions-headline">Navigate your way through {{ city_info.city }}</h1>
+			<p class="directions-description">
+				We created an optimal travel itinerary using <b>Google Maps Direction Service</b>. If you're in a hurry, this is the best way to visit all the recommended places! The starting point of your itinerary should be in the center of the map. Remember, you can always use our custom-made <a class="section-description-link" target="_blank" href="/street-view/{{ city_info.plan_id }}">Street View</a> navigator to browse, step-by-step, through all these locations.
+			</p>
+		</div>
+		<div id="map"></div>
+	</div>
+	{% endif %}
+
+	{% if videos|length %}
+	<!-- Some high definition videos -->
+	<div class="cover" data-background-image="{{ cover_photos[5].url|tj_default_cover_photo(5) }}" style="background-color: #CCC"></div>
+
+	<div id="videos" class="content">
+		<div class="article clearfix">
+			<h1 class="videos-headline">Videos about {{ city_info.city }}</h1>
+
+			<p class="videos-description">It is said that, "a picture is worth a thousand words", so we say "a video is worth innumerable words and is priceless". We found some amazing videos about travelling to <b>{{ city_info.city }}</b>. You can browse through a selection of the most relevant ones below. You'll quickly learn which are the very best tourist attractions, so you can start prioritizing.</p>
+			
+			{% for video in videos %}
+			<div class="video md-trigger js-modal" data-modal="modal-content">
+				<img src="{{ video.thumbnail }}" />
+				<div class="hidden-modal-content">
+					<p class="book__popup-title">{{ video.title }}</p>
+					<div data-video-id="{{ video.video_id }}" class="video__popup-wrapper video-container">
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+	
+	{% if books|length %}
+	<!-- Some fascinating books -->
+	<div class="cover" data-background-image="{{ cover_photos[6].url|tj_default_cover_photo(6) }}" style="background-color: #CCC"></div>
+
+	<div id="books" class="content">
+		<div class="article">
+			<h1 class="books-headline">Books about {{ city_info.city }}</h1>
+
+			<p class="books-description">We also put together the best selection of travelling books and guides about <b>{{ city_info.city }}</b>, so you can find impressions, ideas and stories from people who love travelling. The less time you spend searching for relevant information, the more time you'll have to prepare for your trip.</p>
+
+			<div class="books">
+				{% for book in books %}
+				<div class="book md-trigger js-modal" data-modal="modal-content">
+					<img src="{{ book.thumbnail }}" />
+					
+					<div class="hidden-modal-content">                        
+						<div class="book__popup-wrapper clearfix">
+							<div class="book">
+								<a target="_blank" href="{{ book.url }}"><img src="{{ book.thumbnail }}" /></a>
+							</div>
+							<p class="book__popup-title">{{ book.title }}</p>
+							<p>{{ book.description|truncate(512) }}</p>
+							<p><a target="_blank" href="{{ book.url }}" title="{{ book.title }}">Read more</a></p>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	<!-- Comments Section -->
+	<div class="cover" data-background-image="{{ cover_photos[7].url|tj_default_cover_photo(7) }}" style="background-color: #CCC"></div>
+
+	<div id="comments" class="content">
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+		/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+		var disqus_shortname = "travel-journal"; // required: replace example with your forum shortname
+		//var disqus_identifier = "";
+		var disqus_title = "Travel Journal - {{ city_info.city }}";
+		var disqus_url = "{{ BASE_URL.scheme + '://' + BASE_URL.netloc + BASE_URL.path }}";
+
+		/* * * DON'T EDIT BELOW THIS LINE * * */
+		(function() {
+			var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+			dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+			(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		})();
+		</script>
+	</div>
+
+	<!-- Modal logic -->
+	<div class="md-modal md-effect-10" id="modal-content">
+		<div class="md-content">
+			<div class="md-header"><i class="fa fa-times md-close"></i></div>
+			<div class="md-wrapper"></div>
+		</div>
+	</div>
+	
+	<div class="md-overlay"></div><!-- the overlay element -->
+
+	{% include "tj__footer-journal.html" %}
+
+	<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false&v=3.exp&key={{ GOOGLE_API_KEY }}"></script>
+
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="/static/js/libs/jquery.xhr.js"></script>
+	<script type="text/javascript" src="/static/js/libs/isMobile.min.js"></script>
+
+	<script type="text/javascript" src="/static/js/modernizr/modernizr.min.js"></script>
+	<script type="text/javascript" src="/static/js/niftymodal/classie.js"></script>
+	<script type="text/javascript" src="/static/js/niftymodal/modalEffects.js"></script>
+
+	<script type="text/javascript" src="/static/js/amcharts/amcharts.js"></script>
+	<script type="text/javascript" src="/static/js/amcharts/gauge.js"></script>
+	<script type="text/javascript" src="/static/js/amcharts/serial.js"></script>
+	
+	<script type="text/javascript" src="/static/js/pages/journal/init.js"></script>	
+</body>
+
+</html>

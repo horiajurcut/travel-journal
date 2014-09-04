@@ -1,0 +1,22 @@
+application: gcdc2013-travel-journal
+version: 2
+runtime: python27
+api_version: 1
+threadsafe: false
+
+inbound_services:
+- warmup
+
+handlers:
+- url: /static
+  static_dir: static
+
+- url: /.*
+  script: travel.application
+  secure: optional
+
+libraries:
+- name: jinja2
+  version: "2.6"
+- name: MySQLdb
+  version: "latest"

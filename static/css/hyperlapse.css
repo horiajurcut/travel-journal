@@ -1,0 +1,38 @@
+#hyperlapse {
+	width: 100%;
+	height: calc(100% - 4.85rem);
+	display: table;
+	text-align: center;
+}
+
+#hyperlapse #pano {
+	width: 60%;
+	height: 40rem;
+	display: table-cell;
+	vertical-align: middle;
+	line-height: 1;
+}
+
+#hyperlapse #pano canvas {
+	width: 80% !important;
+	height: 90% !important;
+}
+
+#hyperlapse .hyperlapse__progress-wrap {
+	display: table-cell;
+	vertical-align: middle;
+	line-height: 1;
+	height: 5rem;
+}
+
+#hyperlapse .hyperlapse__progress-wrap h1 {
+	font-weight: normal;
+	font-size: 2rem;
+	padding: 0;
+	margin: 1rem;
+}
+
+#hyperlapse #pano.invisible,
+#hyperlapse .hyperlapse__progress-wrap.invisible {
+	display: none;
+}

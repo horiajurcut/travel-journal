@@ -1,0 +1,154 @@
+/* Maps Containers */
+.street-view__wrapper {
+	width: 100%;
+	height: calc(100% - 4.85rem);
+	overflow: hidden;
+
+	font-family: open-sans, sans-serif;
+}
+
+.street-view__wrapper .street-view__map {
+	height: 100%;
+	width: 75%;
+	float: left;
+
+	border: 0;
+	margin: 0;
+	padding: 0;
+
+	background: #CCC;
+}
+
+.street-view__wrapper .street-view__directions {
+	width: 23%;
+	height: 98%;
+	float: left;
+
+	padding: 1%;
+	overflow-y: scroll;
+
+	background: #FFF;
+}
+
+@media (max-width: 860px) {
+	#directions {
+		display: none;
+	}
+
+	#map {
+		width: 100%;
+	}
+}
+
+/* = Google Maps Directions
+-------------------------------------------------------------- */
+.leg .leg-title {
+	font-size: 1.5rem;
+	font-weight: 300;
+
+	color: #57A3D1;
+	cursor: pointer;
+	padding: 0.5rem;
+	margin: 0.7rem 0;
+}
+
+.leg .leg-title i {
+	width: 2.2rem;
+	color: #57A3D1;
+}
+
+.leg .leg-title.selected-step {
+	color: #fff;
+	background: #57A3D1;
+}
+
+.leg .leg-title.selected-step i {
+	color: #fff;
+}
+
+.leg .leg-info {
+	padding: 0.3rem 0.5rem;
+	text-align: center;
+	display: table;
+	color: #6A747C;
+	font-style: italic;
+	background-color: #E8E9EB;
+}
+
+.leg .leg-info i {
+	padding-right: 0.5rem;
+	color: #6A747C;
+}
+
+.leg .leg-steps ul {
+	list-style: none;
+	padding: 0;
+}
+
+.leg .leg-steps ul li:first-child {
+	border-top: 1px solid #E8E9EB;
+}
+
+.leg .leg-steps ul li {
+	position: relative;
+	padding: 1rem 0.5rem;
+	border-bottom: 1px solid #E8E9EB;
+	color: #6A747C;
+}
+
+.leg .leg-steps ul li i {
+	width: 1.3rem;
+	color: #303336;
+}
+
+.leg .leg-steps ul li div {
+	padding: 0.5rem 0 0 1.2rem;
+	color: #6A747C;
+
+	font-weight: 300;
+}
+
+.leg .leg-steps ul li.selected-step i {
+	color: #FFF;
+}
+
+.leg .leg-steps ul li.selected-step + li {
+	z-index: 1;
+}
+
+.leg .leg-steps ul li:hover {
+	cursor: pointer;
+}
+
+.leg .leg-steps ul li b {
+	color: #6A747C;
+	font-weight: 400;
+}
+
+.leg .leg-steps ul li div.step-distance {
+	position: absolute;
+	right: 0;
+	background: #FFF;
+	font-size: 0.9rem;
+	line-height: 1;
+	bottom: -0.5rem;
+	padding: 0 0.25rem;
+	z-index: 2;
+	color: #333;
+	border: 1px solid #E8E9EB;
+}
+
+.leg .leg-steps ul li.selected-step,
+.leg .leg-steps ul li.selected-step b {
+	background: #FEC14B;
+	color: #303336;
+}
+
+.leg .leg-steps ul li.selected-step,
+.leg .leg-steps ul li.previous-step {
+	border-bottom: 1px solid #FEC14B;
+}
+
+.leg .leg-steps ul li:first-of-type.selected-step {
+	border-top: 1px solid #FEC14B;
+}

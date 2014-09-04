@@ -1,0 +1,343 @@
+/* Datepicker */
+.picker__holder {
+	overflow: hidden !important;
+}
+
+.picker__button--today {
+	font-size: 1.3rem !important;
+}
+
+.picker__button--clear {
+	font-size: 1.3rem !important;
+}
+
+.picker__frame {
+	max-height: 50% !important;
+}
+
+.picker--opened .picker__frame {
+	top: auto !important;
+	bottom: 20% !important;
+}
+
+/* Plan */
+.plan__content {
+	width: 100%;
+	margin-top: 6rem;
+}
+
+.plan__content ul {
+	margin: 0.5rem 1% 2rem 1%;
+	padding: 0;
+}
+
+.plan__content li {
+	list-style: none;
+}
+
+.plan__new-form {
+	width: 100%;
+	margin: 0;
+	text-align: center;
+}
+
+.plan__new-form h1,
+.plan__new-form input {
+	margin: 1rem 2%;
+}
+
+/* Nifty checkboxes */
+
+.plan__big-cb-item {
+	text-align: left;
+	float: left;
+	width: 100%;
+	padding: 1% 1% 0 1%;
+	
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.plan__big-cb-wrap {
+	position: relative;
+	background: #FFF;
+	cursor: pointer;
+	width: 100%;
+	border: 1px solid #6A747C;
+}
+
+
+
+.big-cb {
+   display: none;
+}
+
+.big-cb-label {
+	height: 5rem;
+	width: 5rem;
+	background: #6A747C;
+	font-size: 4rem;
+	cursor: pointer;
+	display: inline-table;
+	vertical-align: middle;
+	margin: 0;
+	color: #FFF;
+}
+
+.plan__big-cb-wrap label {
+	width: 100%;
+	background: transparent;
+	display: block;
+	height: 5rem;
+	cursor: pointer;
+	vertical-align: middle;
+	margin: 0;
+	z-index: 999;
+}
+
+.big-cb:checked + .plan__big-cb-wrap .big-cb-label {
+	background: #FEC14B;
+}
+
+.big-cb:checked + .plan__big-cb-wrap {
+	border-color: #FEC14B;
+}
+
+.big-cb-label i.hidden {
+	display: none;
+}
+
+.big-cb:checked + .plan__big-cb-wrap .big-cb-label i.hidden {
+	display: table-cell;
+	font-size: 4rem;
+	width: 5rem;
+	height: 5rem;
+	color: #faf8e1;
+}
+
+.big-cb-label {
+	margin: 0;
+	text-align: center;
+}
+
+.big-cb-label i {
+	font-size: 3rem;
+	vertical-align: middle;
+	width: 3rem;
+	height: 3rem;
+	display: table-cell;
+	line-height: 0;
+}
+
+.big-cb:checked + .plan__big-cb-wrap .big-cb-label i {
+	display: none;
+}
+
+.big-cb-desc {
+	font-size: 1.6rem;
+	font-weight: normal;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0;
+	padding-left: 0.5rem;
+	color: #6A747C;
+}
+
+.plan__question {
+	color: #6A747C;
+
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+
+	font-size: 1.8rem;
+	font-family: open-sans, sans-serif;
+	font-weight: normal;
+}
+
+.plan__question.error {
+	color: #D64136;
+	padding-top: 1rem;
+}
+
+.required {
+	color: #D64136 !important;
+	border-color: #D64136 !important;
+}
+
+.required-question {
+	color: #D64136 !important;
+}
+
+.plan__new-form input[type="text"] {
+	color: #6A747C;
+}
+
+.plan__new-form input[type="text"],
+.typeahead,
+.datepicker {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	border: 1px solid #6A747C;
+	background: #FFF;
+	outline: none;
+
+	font-size: 1.8rem;
+	font-family: open-sans, sans-serif;
+
+	padding: 1%;
+	width: 96%;
+
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.plan__new-form button {
+	width: 25%;
+	font-size: 2rem;
+	font-family: open-sans, sans-serif;
+
+	margin-top: 1rem;
+	margin-bottom: 3rem;
+	padding: 1rem;
+}
+
+/* = TypeHead
+-------------------------------------------------------------- */
+.typeahead {
+	background: #FFF;
+}
+
+.tt-hint {
+	color: #CCC !important;
+}
+
+.twitter-typeahead,
+.typeahead,
+.tt-hint {
+	width: 100%;
+}
+
+.tt-dropdown-menu {
+	text-align: left;
+	width: 94%;
+	margin: 0.5rem 2%;
+
+	padding: 1%;
+	background-color: #fff;
+
+	border: 1px solid #333333;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+
+	font-size: 1.8rem;
+	font-weight: normal;
+	box-shadow:0 1px 2px #AAA;
+}
+
+.tt-suggestion {
+	padding: 0.5rem 1%;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+	color: #faf8e1;
+	background-color: #FEC14B;
+}
+
+.tt-suggestion p {
+	margin: 0;
+}
+
+/* = Media Queries
+-------------------------------------------------------------- */
+@media only screen and (max-width: 599px) {
+	.plan__content {
+		margin-top: 1.5rem;
+	}
+
+	.plan__question {
+		font-size: 1.4rem;
+	}
+
+	.plan__new-form h1,
+	.plan__new-form input {
+		margin: 0.6rem 2%;
+	}
+
+	.plan__new-form input[type="text"],
+	.typeahead,
+	.tt-hint,
+	.tt-suggestion {
+		font-size: 1.4rem;
+	}
+
+	.plan__new-form input[type="text"] {
+		padding: 3%;
+	}
+
+	.plan__new-form button {
+		width: 96%;
+	}
+
+	.big-cb-desc {
+		font-size: 1.4rem;
+	}
+}
+
+.pure-button-primary {
+	background: #6A747C;
+}
+
+.pure-button-primary:hover {
+	background: #57A3D1;
+}
+
+
+@media only screen and (min-width: 600px) and (max-width: 900px) {
+	.plan__big-cb-item {
+		width: calc(100% / 2);
+	}
+
+	.plan__new-form h1,
+	.plan__new-form input {
+		margin: 0.8rem 2%;
+	}
+
+	.plan__new-form input[type="text"] {
+		padding: 2%;
+	}
+}
+
+@media only screen and (min-width: 901px) and (max-width: 1200px) {
+	.plan__big-cb-item {
+		width: calc(100% / 3);
+	}
+}
+
+@media only screen and (min-width: 1201px) and (max-width: 1580px) {
+	.plan__big-cb-item {
+		width: calc(100% / 4);
+	}
+}
+
+@media only screen and (min-width: 1581px) and (max-width: 1900px) {
+	.plan__big-cb-item {
+		width: calc(100% / 5);
+	}
+}
+
+@media only screen and (min-width: 1901px) {
+	.plan__big-cb-item {
+		width: calc(100% / 6);
+	}
+}
